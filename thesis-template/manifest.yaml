@@ -1,0 +1,17 @@
+# 电子科技大学专业硕士论文资产清单（Manifest）
+# 请在开始写作前填入真实路径与信息，写作 Skill 将严格以此为事实依据
+thesis_info:
+  title_zh: "[请填写中文论文题目，一般不超过25字]"
+  title_en: "[Please Fill in English Thesis Title]"
+  degree_type: "promaster"
+  professional_field: "电子信息"   # 如 0854 电子信息 / 0855 机械
+  author: "[您的姓名]"
+  student_id: "[您的学号]"
+  supervisor: "[责任导师姓名]"
+  school: "[所在学院，如信息与通信工程学院]"
+
+assets:
+  code_repos: []        # 例: ["../src/model.py", "../src/train.py"]
+  experiment_logs: []   # 例: ["../results/metrics.csv"]
+  figures: []           # 例: ["figures/chap03/system_arch.png"]
+  core_references: []   # 例: ["bib/ref.bib"]

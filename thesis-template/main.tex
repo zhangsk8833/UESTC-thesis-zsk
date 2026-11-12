@@ -1,0 +1,54 @@
+% !TeX Program = xelatex
+% 电子科技大学专业硕士学位论文主控文件（基于 MGG1996/DissertationUESTC promaster 模式）
+% 盲审提交时可在选项中加入 review：\documentclass[promaster, vlined, review]{DissertUESTC}
+\documentclass[promaster, vlined]{DissertUESTC}
+
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+
+% --- 封面与中文扉页信息配置 ---
+% \setconfidential{公开}{} % 涉密论文填写密级与年限
+\uestccover{请填写中文论文题目}{电子信息}{学号}{作者姓名}{导师姓名}{教授}{信息与通信工程学院}
+
+\ClsNum{TN929.5}
+\ClsLv{公开}
+\UDC{621.39}
+\DissertationTitle{请填写中文论文题目}
+\Author{作者姓名}
+\Supervisor{导师姓名}{教 授}{电子科技大学}{成 都}
+% \AssociateSupervisor{副导师姓名}{副教授}{电子科技大学}{成 都} % 若有联合指导取消注释
+\DegLv{硕士}
+\Major{电子信息}
+\Profield{电子信息}
+\Date{2026 年 4 月}{2026 年 5 月}
+\Grant{电子科技大学}{2026 年 6 月}
+\Reviewer{xxx}{xxxxx}
+
+% --- 英文扉页信息配置 ---
+\uestcentitlepage{English Thesis Title}{Electronic Information}{Student ID}{Author Name}{Prof. Supervisor}{}{School of Information and Communication Engineering}
+
+\begin{document}
+
+% --- 前置部分：中英文摘要、目录、缩略词表 ---
+\input{chapters/abstract}
+\makecover
+\input{chapters/acronyms}
+
+% --- 主体部分 ---
+\input{chapters/chap01_intro}
+\input{chapters/chap02_theory}
+\input{chapters/chap03_work1}
+\input{chapters/chap04_work2}
+\input{chapters/chap05_conclusion}
+
+% --- 结尾部分：致谢、参考文献、附录、成果 ---
+\input{chapters/acknowledgement}
+
+\bibliographystyle{DissertUESTC}
+\bibliography{bib/ref}
+
+\input{chapters/appendix}
+\input{chapters/achievements}
+
+\end{document}
