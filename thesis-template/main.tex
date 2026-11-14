@@ -1,11 +1,18 @@
 % !TeX Program = xelatex
 % 电子科技大学专业硕士学位论文主控文件（基于 MGG1996/DissertationUESTC promaster 模式）
 % 盲审提交时可在选项中加入 review：\documentclass[promaster, vlined, review]{DissertUESTC}
+% TeX Live 2020 缺少新版内核的命令复制接口；新版环境使用内核原实现。
+\RequirePackage{letltxmacro}
+\providecommand{\NewCommandCopy}[2]{\LetLtxMacro#1#2}
+\providecommand{\RenewCommandCopy}[2]{\LetLtxMacro#1#2}
 \documentclass[promaster, vlined]{DissertUESTC}
 
 \usepackage{amsmath,amssymb}
 \usepackage{booktabs}
 \usepackage{graphicx}
+\usepackage{uestc-project}
+
+\begin{document}
 
 % --- 封面与中文扉页信息配置 ---
 % \setconfidential{公开}{} % 涉密论文填写密级与年限
@@ -26,13 +33,13 @@
 \Reviewer{xxx}{xxxxx}
 
 % --- 英文扉页信息配置 ---
-\uestcentitlepage{English Thesis Title}{Electronic Information}{Student ID}{Author Name}{Prof. Supervisor}{}{School of Information and Communication Engineering}
-
-\begin{document}
+\uestczhtitlepage
+\uestcentitlepage{English Thesis Title}{Electronic Information}{Student ID}{Author Name}{Prof. Supervisor}{}{\shortstack{School of Information and\\Communication Engineering}}
+\declaration{}{}{}
 
 % --- 前置部分：中英文摘要、目录、缩略词表 ---
 \input{chapters/abstract}
-\makecover
+\tableofcontents
 \input{chapters/acronyms}
 
 % --- 主体部分 ---
@@ -45,7 +52,7 @@
 % --- 结尾部分：致谢、参考文献、附录、成果 ---
 \input{chapters/acknowledgement}
 
-\bibliographystyle{DissertUESTC}
+% 文档类按 promaster 选项自动指定参考文献样式。
 \bibliography{bib/ref}
 
 \input{chapters/appendix}

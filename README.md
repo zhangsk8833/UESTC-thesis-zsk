@@ -17,12 +17,17 @@ cp -r skills/uestc-tex2docx ~/.claude/skills/
 # 如使用 Codex，将 ~/.claude/skills/ 替换为 ~/.codex/skills/
 ```
 
-## 补全模板类文件（首次使用）
+## 模板依赖与兼容性
 
-本仓库已预置完整模块化 `main.tex`、`chapters/*.tex` 与 `latexmkrc`。首次编译前，请从上游仓库 [MGG1996/DissertationUESTC](https://github.com/MGG1996/DissertationUESTC) 复制以下三个核心文件/目录放入 `thesis-template/`：
+本仓库已补齐 [MGG1996/DissertationUESTC](https://github.com/MGG1996/DissertationUESTC/tree/1b817a6a17ae056691eb7d05464ca0960470cd8d)（提交 `1b817a6a17ae056691eb7d05464ca0960470cd8d`）的以下依赖，无需首次使用时手动下载：
 - `DissertUESTC.cls`
 - `DissertUESTC.bst`
 - `font/`
+- `fig/uestclogo.pdf`（封面校徽）
+
+上游依赖保持原样。`uestc-project.sty` 将项目的摘要、致谢、成果语义环境映射到上游命令，供 LaTeX 和 DOCX 流水线共用章节源文件。`main.tex` 为 TeX Live 2020 的命令复制接口提供兼容回退，并显式排版封面、扉页、声明和目录；`latexmkrc`、`manifest.yaml` 和原有章节保持不变。
+
+已在 Windows 的 TeX Live 2020/XeLaTeX 环境验证 `promaster` 编译；编译助手使用 BibTeX，以及有索引条目时的 nomencl/MakeIndex。DOCX 转换需要安装 `python-docx`。Windows 若没有 `python3` 命令，可改用安装了该依赖的 `python` 或 Python 可执行文件的完整路径。生成的 PDF、索引和转换测试文件不提交到 Git。
 
 ## 标准写作与交付工作流
 

@@ -1,0 +1,9 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{uestc-project}[2026/11/14 Project semantic environments]
+% Keep the chapter interfaces shared with the TeX-to-DOCX parser.
+\newenvironment{chineseabstract}{\zhabstract}{\par}
+\newenvironment{englishabstract}{\enabstract}{\par}
+\newcommand{\chinesekeywords}[1]{\zhkeywords{#1}}
+\newcommand{\englishkeywords}[1]{\enkeywords{#1}}
+\renewenvironment{thanks}{\acknowledgement}{\par}
+\newenvironment{publications}{\achievement\begin{enumerate}}{\end{enumerate}}
