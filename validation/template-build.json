@@ -1,0 +1,42 @@
+{
+  "engine": "XeTeX 3.141592653-2.6-0.999998 (TeX Live 2026)",
+  "legacy_diagnostic": false,
+  "commands": [
+    [
+      "xelatex.exe",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "-file-line-error",
+      "main.tex"
+    ],
+    [
+      "xelatex.exe",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "-file-line-error",
+      "main.tex"
+    ],
+    [
+      "xelatex.exe",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "-file-line-error",
+      "main.tex"
+    ],
+    [
+      "xelatex.exe",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "-file-line-error",
+      "main.tex"
+    ]
+  ],
+  "issues": [
+    "Overfull \\hbox (19.72725pt too wide) in paragraph at lines 7--7",
+    "Overfull \\hbox (1.50562pt too wide) in paragraph at lines 7--7",
+    "Overfull \\hbox (1.00371pt too wide) in paragraph at lines 15--15",
+    "Overfull \\hbox (1.00372pt too wide) in paragraph at lines 15--15"
+  ],
+  "pdf": "main.pdf",
+  "visual_review": "required"
+}

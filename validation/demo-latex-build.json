@@ -1,0 +1,41 @@
+{
+  "engine": "XeTeX 3.141592653-2.6-0.999998 (TeX Live 2026)",
+  "legacy_diagnostic": false,
+  "commands": [
+    [
+      "xelatex.exe",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "-file-line-error",
+      "main.tex"
+    ],
+    [
+      "bibtex.EXE",
+      "main"
+    ],
+    [
+      "xelatex.exe",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "-file-line-error",
+      "main.tex"
+    ],
+    [
+      "xelatex.exe",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "-file-line-error",
+      "main.tex"
+    ],
+    [
+      "xelatex.exe",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "-file-line-error",
+      "main.tex"
+    ]
+  ],
+  "issues": [],
+  "pdf": "main.pdf",
+  "visual_review": "required"
+}

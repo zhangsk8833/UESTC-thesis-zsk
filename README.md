@@ -1,50 +1,24 @@
-# UESTC-thesis-zsk：电子科技大学专业硕士论文 Skill 与模板工程
+# 电子科技大学中文专业硕士论文工作包
 
-本仓库整合了课题组导师学术偏好（[Digital-Mentor](https://github.com/Gavin-Jiang-97/Digital-Mentor)）、开源学术写作与去 AI 检测实践（[academic-writing-skills](https://github.com/bahayonghang/academic-writing-skills)、[codex-claude-academic-skills](https://github.com/zLanqing/codex-claude-academic-skills)、[paper-write](https://github.com/xstongxue/best-skills/blob/main/skills/paper-write/SKILL.md)、[master-thesis-studio-skill](https://github.com/darksider-9/master-thesis-studio-skill)），以及电子科技大学专业硕士撰写规范与 [DissertationUESTC](https://github.com/MGG1996/DissertationUESTC) LaTeX 模板。
+适用于中文专业硕士学位论文，英文只用于学校要求的摘要和扉页。研究内容由作者材料决定；本包不提供虚构实验，不保证任何 AI 检测结果。
 
-## 目录结构
+## 内容
+- `skills/uestc-thesis-writer`：导师偏好、材料证据、主线与章节写作、自然表达、引用审校及编译。
+- `thesis-template`：基于 DissertationUESTC 的 `promaster` 工程；`main.tex` 电子阅读入口，`main-print.tex` 打印入口。
+- `skills/uestc-tex2docx`：LaTeX → Pandoc AST → editable OMML/Word，独立转换和验收。
+- `school-profile`：学校规则与依据；`examples/conversion-demo`：专用转换测试数据，不是论文内容。
+- `validation/REPORT.md`：实际完成的验证与当前边界。请先看这个文件再判断转换器能否处理你的全文。
 
-- `skills/uestc-thesis-writer/`：专硕论文写作、防 AIGC 润色、导师偏好对齐与校规自检 Skill。
-- `skills/uestc-tex2docx/`：将 `DissertationUESTC` LaTeX 源码一键转为符合学校官方规范的 Word（`.docx`）文档。
-- `thesis-template/`：基于 `DissertationUESTC` 改造的专业硕士（`promaster`）模块化 LaTeX 工程模板。
+## 开始使用
+1. 将两个 Skill 文件夹复制到 Codex 的 skills 目录，重启或重新打开会话使其可发现。保留已有技能的备份。Skill 路径不依赖这台电脑的用户名。
+2. 安装 Python 依赖 `python -m pip install -r requirements.txt`；准备 Pandoc 3.4+ 和 TeX Live 2024+。旧 TeX Live 2020 不能作为此模板的验证环境。
+3. 复制 thesis-template 为实际论文项目；填写 metadata.tex 和 project/brief.json，提交实验原始结果、代码及主要参考文献。先建立证据与章节映射，再写章节。
+4. 对 Codex 说：“使用 $uestc-thesis-writer，依据这些材料先完成输入盘点和章节主线。所有缺证结论记录在 issues 中。”局部改稿可直接指定章节，不必重走所有阶段。
+5. Word 输出时说：“使用 $uestc-tex2docx 转换此项目，使用我提供的学校专业硕士封面与规范，更新域并逐页检查。”命令见相应 SKILL.md。
 
-## 快速安装 Skill
+模板是可编译的写作骨架，待填字段和章节提示刻意保留，`--final` 检查应失败，不能当作已完成论文。完整版不是一键支持所有 LaTeX 宏包：复杂环境需按支持矩阵适配。
 
-### Claude Code / Codex 全局安装
-```bash
-cp -r skills/uestc-thesis-writer ~/.claude/skills/
-cp -r skills/uestc-tex2docx ~/.claude/skills/
-# 如使用 Codex，将 ~/.claude/skills/ 替换为 ~/.codex/skills/
-```
+## 设计依据
+重点采用 Digital-Mentor 的导师论证偏好，以及 academic-writing-skills 的写作任务划分和证据审校思路；参考其他项目的规范组织、中文论文工作流和 Word 构建经验。导师规则逐条区分原始依据与中文适配，师兄论文仅提炼写法，不复制内容或研究框架。见 `docs/SOURCES.md`、`THIRD_PARTY_NOTICES.md`。
 
-## 模板依赖与兼容性
-
-本仓库已补齐 [MGG1996/DissertationUESTC](https://github.com/MGG1996/DissertationUESTC/tree/1b817a6a17ae056691eb7d05464ca0960470cd8d)（提交 `1b817a6a17ae056691eb7d05464ca0960470cd8d`）的以下依赖，无需首次使用时手动下载：
-- `DissertUESTC.cls`
-- `DissertUESTC.bst`
-- `font/`
-- `fig/uestclogo.pdf`（封面校徽）
-
-上游依赖保持原样。`uestc-project.sty` 将项目的摘要、致谢、成果语义环境映射到上游命令，供 LaTeX 和 DOCX 流水线共用章节源文件。`main.tex` 为 TeX Live 2020 的命令复制接口提供兼容回退，并显式排版封面、扉页、声明和目录；`latexmkrc`、`manifest.yaml` 和原有章节保持不变。
-
-已在 Windows 的 TeX Live 2020/XeLaTeX 环境验证 `promaster` 编译；编译助手使用 BibTeX，以及有索引条目时的 nomencl/MakeIndex。DOCX 转换需要安装 `python-docx`。Windows 若没有 `python3` 命令，可改用安装了该依赖的 `python` 或 Python 可执行文件的完整路径。生成的 PDF、索引和转换测试文件不提交到 Git。
-
-## 标准写作与交付工作流
-
-1. **填写资产清单**：将实验结果路径、仿真代码路径与核心参考文献填入 `thesis-template/manifest.yaml`。
-2. **由内向外撰写**：调用 `uestc-thesis-writer`，按“第 3~4 章方法与实验 → 第 2 章理论基础 → 第 1 章绪论 → 结论与摘要”逐章写入 `thesis-template/chapters/*.tex`。
-3. **防 AI 润色与校规双检**：
-   ```bash
-   python3 skills/uestc-thesis-writer/scripts/check_uestc_tex.py --root thesis-template
-   python3 skills/uestc-thesis-writer/scripts/deai_scanner.py --target thesis-template/chapters/chap03_work1.tex
-   ```
-4. **编译 PDF（本地 XeLaTeX 或 Overleaf TeXLive 2024）**：
-   ```bash
-   python3 skills/uestc-thesis-writer/scripts/compile_thesis.py --root thesis-template --main main
-   ```
-5. **一键转合规 Word**：
-   ```bash
-   python3 skills/uestc-tex2docx/scripts/parse_uestc_tex.py --root thesis-template --main main.tex --out thesis_ast.json
-   python3 skills/uestc-tex2docx/scripts/tex2docx.py --ast thesis_ast.json --template skills/uestc-tex2docx/assets/uestc_master_template.docx --root thesis-template --out thesis_output.docx
-   python3 skills/uestc-tex2docx/scripts/validate_docx.py --docx thesis_output.docx
-   ```
+用户资料、原始师兄论文、学校 DOCX 原件、未发表实验和本机绝对路径不随公共工作包上传。学校模板在运行时由用户提供。

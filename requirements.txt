@@ -1,0 +1,3 @@
+-r skills/uestc-tex2docx/requirements.txt
+PyYAML>=6,<7
+Pillow>=13,<14

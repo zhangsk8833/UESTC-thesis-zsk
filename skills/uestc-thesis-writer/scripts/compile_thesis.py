@@ -1,61 +1,33 @@
-#!/usr/bin/env python3
-"""
-电子科技大学 LaTeX 学位论文编译脚本（XeLaTeX + BibTeX + nomencl/MakeIndex）
-失败时提取文件与行号报错，兼容 Windows 的工具输出编码。
-"""
-import argparse
-import shutil
-import subprocess
+import argparse, subprocess, shutil, os, re, json
 from pathlib import Path
 
-
-def run_step(cmd: list[str], cwd: Path) -> tuple[int, str]:
-    proc = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True,
-                          encoding="utf-8", errors="replace", timeout=180)
-    return proc.returncode, proc.stdout + "\n" + proc.stderr
-
-
-def main() -> int:
-    parser = argparse.ArgumentParser(description="UESTC LaTeX 四步编译助手")
-    parser.add_argument("--root", default="thesis-template", help="LaTeX 工程根目录")
-    parser.add_argument("--main", default="main", help="主文件名（不含 .tex）")
-    args = parser.parse_args()
-
-    root = Path(args.root)
-    if not shutil.which("xelatex"):
-        print("未检测到 xelatex。请在本地安装 TeXLive 2024+ 或上传至 Overleaf（设置编译器为 XeLaTeX + TeXLive 2024）编译。")
-        return 1
-
-    # DissertationUESTC uses nomencl/makeindex, not glossaries/makeglossaries.
-    steps = [
-        ["xelatex", "-interaction=nonstopmode", "-file-line-error", f"{args.main}.tex"],
-        ["bibtex", args.main],
-        ["makeindex", f"{args.main}.nlo", "-s", "nomencl.ist", "-o", f"{args.main}.nls"],
-        ["xelatex", "-interaction=nonstopmode", "-file-line-error", f"{args.main}.tex"],
-        ["xelatex", "-interaction=nonstopmode", "-file-line-error", f"{args.main}.tex"],
-    ]
-
-    for step in steps:
-        if step[0] == "makeindex":
-            index = root / f"{args.main}.nlo"
-            if not index.exists() or not index.read_bytes().strip():
-                print("[跳过] 无 nomencl 索引条目。")
-                continue
-        if not shutil.which(step[0]):
-            print(f"[失败] 未找到必需命令：{step[0]}")
-            return 1
-        print(f"[执行] {' '.join(step)}")
-        rc, out = run_step(step, root)
-        if rc != 0:
-            print(f"[失败] 命令 {' '.join(step)} 返回码 {rc}")
-            for line in out.splitlines():
-                if line.startswith("!") or ": error:" in line or ".tex:" in line or ".cls:" in line or ".sty:" in line:
-                    print("  >", line)
-            return rc
-
-    print(f"[成功] 已生成 {root / (args.main + '.pdf')}")
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
+def compile_project(root,main='main.tex',engine='xelatex',allow_legacy=False):
+    root=Path(root).resolve();exe=shutil.which(engine) or engine
+    version=subprocess.run([exe,'--version'],capture_output=True,text=True,errors='replace',check=True).stdout
+    year=re.search(r'TeX Live (\d{4})',version)
+    if year and int(year[1])<2024 and not allow_legacy:raise RuntimeError('Upstream requires TeX Live >=2024; choose --engine explicitly. --allow-legacy is diagnostic only.')
+    env=os.environ.copy();env['PATH']=str(Path(exe).parent)+os.pathsep+env['PATH'];logdir=root/'build';logdir.mkdir(exist_ok=True)
+    stem=Path(main).stem;commands=[]
+    def run(cmd):
+        r=subprocess.run(cmd,cwd=root,env=env,capture_output=True,text=True,errors='replace',timeout=240)
+        (logdir/f'pass-{len(commands)+1}.txt').write_text(r.stdout+'\n'+r.stderr,encoding='utf-8');commands.append(cmd)
+        if r.returncode:raise RuntimeError(f'Build failed ({r.returncode}): {cmd}; see build logs')
+    args=[exe,'-interaction=nonstopmode','-halt-on-error','-file-line-error',main]
+    run(args)
+    aux=(root/f'{stem}.aux').read_text(encoding='utf-8',errors='replace')
+    if r'\citation{' in aux:
+        bib=shutil.which('bibtex',path=env['PATH']);run([bib,stem])
+    nlo=root/f'{stem}.nlo'
+    if nlo.exists() and nlo.stat().st_size:
+        idx=shutil.which('makeindex',path=env['PATH']);run([idx,str(nlo.name),'-s','nomencl.ist','-o',stem+'.nls'])
+    for _ in range(3):run(args)
+    log=(root/f'{stem}.log').read_text(encoding='utf-8',errors='replace')
+    problems=[x for x in log.splitlines() if re.search(r'undefined|Missing character|multiply defined|Overfull',x,re.I)]
+    result={'engine':version.splitlines()[0],'legacy_diagnostic':bool(year and int(year[1])<2024),'commands':commands,'issues':problems,'pdf':stem+'.pdf','visual_review':'required'}
+    (logdir/'compile-report.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
+    if any(re.search(r'undefined|Missing character|multiply defined',s,re.I) for s in problems):raise RuntimeError('Unresolved references/glyphs; see compile-report.json')
+    return result
+if __name__=='__main__':
+    a=argparse.ArgumentParser();a.add_argument('--root',required=True);a.add_argument('--main',default='main.tex');a.add_argument('--engine',default='xelatex');a.add_argument('--allow-legacy',action='store_true');v=a.parse_args()
+    try:print(json.dumps(compile_project(v.root,v.main,v.engine,v.allow_legacy),ensure_ascii=False,indent=2))
+    except Exception as e:print(str(e));raise SystemExit(1)

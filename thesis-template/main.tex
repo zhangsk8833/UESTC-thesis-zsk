@@ -1,61 +1,31 @@
-% !TeX Program = xelatex
-% 电子科技大学专业硕士学位论文主控文件（基于 MGG1996/DissertationUESTC promaster 模式）
-% 盲审提交时可在选项中加入 review：\documentclass[promaster, vlined, review]{DissertUESTC}
-% TeX Live 2020 缺少新版内核的命令复制接口；新版环境使用内核原实现。
-\RequirePackage{letltxmacro}
-\providecommand{\NewCommandCopy}[2]{\LetLtxMacro#1#2}
-\providecommand{\RenewCommandCopy}[2]{\LetLtxMacro#1#2}
-\documentclass[promaster, vlined]{DissertUESTC}
-
-\usepackage{amsmath,amssymb}
-\usepackage{booktabs}
-\usepackage{graphicx}
-\usepackage{uestc-project}
-
+% !TEX program = xelatex
+% 默认电子阅读版。印刷版通过 main-print.tex 入口构建。
+\documentclass[promaster]{DissertUESTC}
+\input{metadata}
+\input{macros}
 \begin{document}
-
-% --- 封面与中文扉页信息配置 ---
-% \setconfidential{公开}{} % 涉密论文填写密级与年限
-\uestccover{请填写中文论文题目}{电子信息}{学号}{作者姓名}{导师姓名}{教授}{信息与通信工程学院}
-
-\ClsNum{TN929.5}
-\ClsLv{公开}
-\UDC{621.39}
-\DissertationTitle{请填写中文论文题目}
-\Author{作者姓名}
-\Supervisor{导师姓名}{教 授}{电子科技大学}{成 都}
-% \AssociateSupervisor{副导师姓名}{副教授}{电子科技大学}{成 都} % 若有联合指导取消注释
-\DegLv{硕士}
-\Major{电子信息}
-\Profield{电子信息}
-\Date{2026 年 4 月}{2026 年 5 月}
-\Grant{电子科技大学}{2026 年 6 月}
-\Reviewer{xxx}{xxxxx}
-
-% --- 英文扉页信息配置 ---
+\uestccover{\ThesisTitle}{\DegreeCategory}{\StudentID}{\StudentName}{\SupervisorName}{\SupervisorTitle}{\SchoolName}
+\ClsNum{\Classification}\ClsLv{\SecurityLevel}\UDC{\UDCValue}
+\DissertationTitle{\ThesisTitle}\Author{\StudentName}
+\Supervisor{\SupervisorName}{\SupervisorTitle}{电子科技大学}{成都}
+\Major{\DegreeCategory}\Profield{\DegreeField}
+\Date{\SubmitDate}{\DefenseDate}\Grant{电子科技大学}{\GrantDate}
+\Reviewer{\CommitteeChair}{\Reviewers}
 \uestczhtitlepage
-\uestcentitlepage{English Thesis Title}{Electronic Information}{Student ID}{Author Name}{Prof. Supervisor}{}{\shortstack{School of Information and\\Communication Engineering}}
+\uestcentitlepage{\ThesisTitleEn}{\DegreeCategoryEn}{\StudentID}{\StudentNameEn}{\SupervisorEn}{\AssociateSupervisorEn}{\SchoolNameEn}
 \declaration{}{}{}
-
-% --- 前置部分：中英文摘要、目录、缩略词表 ---
-\input{chapters/abstract}
+\input{frontmatter/abstract}
 \tableofcontents
-\input{chapters/acronyms}
-
-% --- 主体部分 ---
-\input{chapters/chap01_intro}
-\input{chapters/chap02_theory}
-\input{chapters/chap03_work1}
-\input{chapters/chap04_work2}
-\input{chapters/chap05_conclusion}
-
-% --- 结尾部分：致谢、参考文献、附录、成果 ---
-\input{chapters/acknowledgement}
-
-% 文档类按 promaster 选项自动指定参考文献样式。
-\bibliography{bib/ref}
-
-\input{chapters/appendix}
-\input{chapters/achievements}
-
+% 图表数量多时按需启用，不能不加区分强制加入。
+% \listoffigures
+% \listoftables
+\input{chapters/01-introduction}
+\input{chapters/02-foundations}
+\input{chapters/03-method}
+\input{chapters/04-experiments}
+\input{chapters/05-conclusion}
+\input{backmatter/acknowledgements}
+\bibliography{references}
+\input{backmatter/appendix}
+\input{backmatter/achievements}
 \end{document}

@@ -1,0 +1,14 @@
+\chapter{跨章关系与表达检查}\label{ch:checks}
+\section{引用和列表}
+第\ref{ch:objects}章的式\eqref{eq:linear}应在转换后保持原编号。以下列表用于检查结构保真，不应因自然化润色被无条件删除。
+\begin{enumerate}
+\item 核对输入文件、公式与标签。
+\item 核对图表和参考文献。
+\end{enumerate}
+\section{分段函数}
+函数的条件必须保持不变，如式\eqref{eq:cases}所示。
+\begin{equation}\label{eq:cases}
+f(x)=\begin{cases}x^2,&x\geq 0,\\-x,&x<0.\end{cases}
+\end{equation}
+\section{本章小结}
+本章检查跨章引用、列表及分段函数。测试通过只表示这些演示对象能够转换，不能证明任意宏包都受支持。

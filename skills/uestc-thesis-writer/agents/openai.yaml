@@ -1,0 +1,4 @@
+interface:
+  display_name: "电子科大中文专硕论文"
+  short_description: "依据真实代码实验及导师偏好撰写审校中文学位论文，保留技术含义与学校格式要求"
+  default_prompt: "使用 $uestc-thesis-writer 根据我的研究材料规划并撰写电子科大中文专业硕士论文。"

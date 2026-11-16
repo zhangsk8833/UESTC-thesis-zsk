@@ -1,0 +1,76 @@
+{
+  "version": "uestc-2022-attachments-20250903",
+  "language": "zh-CN",
+  "degree": "promaster",
+  "source": "https://gr.uestc.edu.cn/xiazai/114/3917",
+  "page": {
+    "width_mm": 210,
+    "height_mm": 297,
+    "margin_mm": 30,
+    "header_mm": 20,
+    "footer_mm": 20
+  },
+  "body": {
+    "east_asia": "宋体",
+    "latin": "Times New Roman",
+    "pt": 12,
+    "line_pt": 20,
+    "first_line_chars": 2
+  },
+  "headings": {
+    "1": {
+      "pt": 15,
+      "before": 24,
+      "after": 18,
+      "center": true
+    },
+    "2": {
+      "pt": 14,
+      "before": 18,
+      "after": 6
+    },
+    "3": {
+      "pt": 14,
+      "before": 12,
+      "after": 6
+    },
+    "4": {
+      "pt": 12,
+      "before": 12,
+      "after": 6
+    }
+  },
+  "caption": {
+    "pt": 10.5,
+    "long_indent_chars": 4
+  },
+  "table": {
+    "outer_pt": 1.5,
+    "inner_pt": 0.75
+  },
+  "header": {
+    "pt": 10.5,
+    "rule_pt": 0.75
+  },
+  "footer": {
+    "pt": 9
+  },
+  "bibliography": {
+    "standard": "GB/T 7714-2015",
+    "pt": 10.5
+  },
+  "abstract": {
+    "max_chars_advisory": 800,
+    "max_pages": 1,
+    "keywords_min": 3,
+    "keywords_max": 5
+  },
+  "footnote": {
+    "pt": 9,
+    "single_spacing": true,
+    "hanging_chars": 1.5,
+    "number_format": "decimalEnclosedCircle",
+    "restart": "eachPage"
+  },
+  "electronic_no_blank_pages": true
+}

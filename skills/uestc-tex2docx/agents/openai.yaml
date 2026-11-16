@@ -1,0 +1,4 @@
+interface:
+  display_name: "电子科大 LaTeX 转 Word"
+  short_description: "将中文专业硕士论文转换为可编辑 Word，检查公式引用与学校排版并报告支持边界"
+  default_prompt: "使用 $uestc-tex2docx 转换我的 DissertationUESTC 工程并核对内容和排版。"
